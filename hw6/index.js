@@ -12,12 +12,24 @@ const server = http.createServer((req, res) => {
 const io = socket(server);
 
 io.on("connection", (client) => {
+  client.on("client-connect", (data) => {
+    const userData = {
+      name: data.name,
+    };
+
+    client.broadcast.emit("server-connect", userData);
+
+    client.on("disconnect", () => {
+      client.broadcast.emit("server-disconnect", userData);
+    });
+  });
+
   client.on("client-msg", (data) => {
     console.log(data);
 
     const payload = {
       name: data.name,
-      message: data.message.split("").reverse().join(""),
+      message: data.message,
     };
 
     client.broadcast.emit("server-msg", payload);

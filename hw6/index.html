@@ -12,8 +12,8 @@
     <title>Document</title>
   </head>
   <body>
-    <input id="userName" type="text" />
-    <input id="input" type="text" autofocus />
+    <div>Подключенных пользователей: <span id="usersCount"></span></div>
+    <input placeholder="Введите сообщение" id="input" type="text" autofocus />
     <button id="button">Send</button>
     <div id="messages"></div>
 
@@ -22,11 +22,12 @@
       const messagesBlock = document.querySelector("#messages");
       const sendButton = document.querySelector("#button");
       const input = document.querySelector("#input");
-      const userName = document.querySelector("#userName");
+      const userName = prompt("Введите имя");
+      const usersCount = document.querySelector("#usersCount");
 
       sendButton.addEventListener("click", () => {
         const data = {
-          name: userName.value,
+          name: userName,
           message: input.value,
         };
         socket.emit("client-msg", data);
@@ -34,13 +35,34 @@
       });
 
       socket.on("connect", () => {
-        console.log("client connected");
+        console.log(`client ${userName} connected`);
+        usersCount.insertAdjacentHTML(
+          "beforebegin",
+          `<div>${userName} подключился</div>`
+        );
+        const userData = { name: userName };
+        console.log(userName);
+        socket.emit("client-connect", userData);
       });
 
       socket.on("server-msg", (data) => {
         messagesBlock.insertAdjacentHTML(
           "afterbegin",
           `<div>${data.name}: ${data.message}</div>`
+        );
+      });
+
+      socket.on("server-connect", (data) => {
+        usersCount.insertAdjacentHTML(
+          "beforebegin",
+          `<div>${data.name} подключился</div>`
+        );
+      });
+
+      socket.on("server-disconnect", (data) => {
+        usersCount.insertAdjacentHTML(
+          "beforebegin",
+          `<div>${data.name} отключился</div>`
         );
       });
     </script>
