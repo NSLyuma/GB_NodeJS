@@ -1,0 +1,33 @@
+{
+  "name": "gb_nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node hw1/index.js"
+  },
+  "bin": {
+    "reader": "cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NSLyuma/GB_NodeJS.git"
+  },
+  "author": "NSLyuma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NSLyuma/GB_NodeJS/issues"
+  },
+  "homepage": "https://github.com/NSLyuma/GB_NodeJS#readme",
+  "devDependencies": {
+    "colors": "^1.4.0"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.2",
+    "moment": "^2.29.2",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.5.0",
+    "yargs": "^17.4.1"
+  }
+}
