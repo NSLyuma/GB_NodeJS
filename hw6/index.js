@@ -15,7 +15,10 @@ io.on("connection", (client) => {
   client.on("client-msg", (data) => {
     console.log(data);
 
-    const payload = { message: data.message.split("").reverse().join("") };
+    const payload = {
+      name: data.name,
+      message: data.message.split("").reverse().join(""),
+    };
 
     client.broadcast.emit("server-msg", payload);
     client.emit("server-msg", payload);
